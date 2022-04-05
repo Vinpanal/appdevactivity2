@@ -1,82 +1,88 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import { Component} from '@angular/core';
 import { AlertController } from '@ionic/angular';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss'],
+  templateUrl: 'contact.component.html',
+  styleUrls: ['contact.component.scss']
 })
-export class ContactComponent implements OnInit {
-  public contact: string;
-  public userlist = [
-    {
-      contact: 1,
-      name: 'Phone No: 09954715520'
-    },
-    {
-      contact: 2,
-      name: 'Facebook: Vin Panal indita'
-    },
-    {
-      contact: 3,
-      name: 'Email: panalmarvin791@gmail.com'
-    },
+export class  ContactComponent {
 
-  ]
-  constructor(private activatedRoute: ActivatedRoute, public actionsheetCtrl: ActionSheetController, public alertCtrl: AlertController) { }
-
-  
-  ngOnInit() {
-    this.contact = this.activatedRoute.snapshot.paramMap.get('contact');
-  }
-  async showactionButtons(index: number) {
-    let actionSheet = this.actionsheetCtrl.create({
-      header: 'Select',
-      cssClass: 'buttons-css',
-      animated: true,
-      backdropDismiss: true,
-      keyboardClose: false,
-      mode: 'ios',
+  contactlist  = [
+    {id: 1, name: 'Vin', email: 'panalmarvin791@gmail.com'  ,number: '09954715520'},
+    {id: 2, name: 'vinpanal', email: 'marvin.indita@evsu.edu.ph'  ,number: '09090869081'},
    
+  ]
+  constructor(public alertController: AlertController,public router: Router) {
+  }
+  redirectTo() {
+    this.router.navigateByUrl('/mailpage');
+  }
+  async  confirmation(index: number) {
+    const alert = await this.alertController.create({
+      header: 'Delete?',
       buttons: [
         {
-          text: 'Trash',
+          text: 'Delete',
           role: 'destructive',
-          icon: 'trash',
           handler: () => {
-              this.userlist.splice(index, 1);
-           this.showAlert();
+              this.contactlist.splice(index, 1);
           }
-        
         },
         {
-          text: 'MAIL',
-          role: 'mail', 
-          icon: 'mail',
+          text: 'Cancel',
+          role: 'cancel', 
           handler: () => {
-            this.userlist.splice(index, 0);
-           this.Alert();
+            console.log('Cancel clicked');
+          }
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+  async addUser() {
+    let prompt = await this.alertController.create({
+      header: 'Add Contact',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'name',
+        },{
+          name: 'email',
+          placeholder: 'email'
+        },
+        {
+          name: 'number',
+          placeholder: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: (data) => {
+            console.log('Saved clicked');
+            
+          this.contactlist.push({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+            number: data.number
+          });
+     
           }
         }
       ]
     });
-     (await actionSheet).present();
+    await prompt.present();
+
   }
-  async showAlert() {
-    const alert = this.alertCtrl.create({
-      header: 'Contact Successfully Deleted!',
-      buttons: ['OK'],
-    });
-    (await alert).present();
-  }
-  async Alert() {
-    const alert = this.alertCtrl.create({
-      header: 'CONTACT ME THANKS ',
-      buttons: ['OK'],
-    });
-    (await alert).present();
-  }
-  
-  }
+
+
+}
