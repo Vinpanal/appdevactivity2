@@ -11,14 +11,14 @@
 
   </ion-toolbar>
 </ion-header>
-<ion-content fullscreen class="component-content">
+<ion-content [fullscreen]="true">
 <ion-accordion-group *ngFor="let contact of contactlist; let i = index">
   <ion-accordion value="contacts">
     <ion-item slot="header">
       <ion-item-sliding>
         <ion-item-options side="start">
-          <ion-item-option color="danger" (click)="confirmation(i)"><ion-icon size="large" name="trash"></ion-icon></ion-item-option>
-          <ion-item-option color="secondary"(click)="redirectTo()">  <ion-icon size="large" name="mail"></ion-icon></ion-item-option>
+          <ion-item-option  (click)="confirmation(i)"><ion-icon size="large" name="trash" color="danger"></ion-icon></ion-item-option>
+          <ion-item-option (click)="redirectTo()">  <ion-icon size="large" name="mail" color="dark"></ion-icon></ion-item-option>
         </ion-item-options>
         <ion-item>
             <ion-thumbnail slot="start">
@@ -39,7 +39,6 @@
           </ion-thumbnail>
         <ion-label>{{ contact.number }}</ion-label>
       </ion-item>
-      
     </ion-list>
   </ion-accordion>
   </ion-accordion-group>

@@ -1,25 +1,11 @@
-#container {
-    text-align: center;
-    border: 2px black;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 10%;
-    background-color: black;
-    height: 85%;
-    margin-left: 10%;
-    margin-right: 20%;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-  }
-  .img{
-    border-radius: 50%;
-  }
-  #container p {
-    font-size: 15px;
-    line-height: 22px;
-    color: white;
-    margin: 0;
-    font-family: 'Times New Roman', Times, serif;
-  }
-  
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 350px;
+  margin: auto;
+  text-align: center;
+  height: 300px;
+  margin-top: 10px;
+}
+ion-icon{
+  margin: 10px;
+}
